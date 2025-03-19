@@ -1,0 +1,40 @@
+<odoo>
+  <record id="view_contract_tree" model="ir.ui.view">
+    <field name="name">hr.contract.tree</field>
+    <field name="model">hr.contract</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="employee_id" />
+        <field name="basic_salary" />
+        <field name="bonus" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_contract_form" model="ir.ui.view">
+    <field name="name">hr.contract.form</field>
+    <field name="model">hr.contract</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="employee_id" />
+            <field name="basic_salary" />
+            <field name="lunch_allowance" />
+            <field name="weekend_ot" />
+            <field name="holiday_ot" />
+            <field name="bonus" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_contract" model="ir.actions.act_window">
+    <field name="name">Contracts</field>
+    <field name="res_model">hr.contract</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="menu_contract" name="Contracts" parent="menu_hr_root" action="action_contract" />
+</odoo>
