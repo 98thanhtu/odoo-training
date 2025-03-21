@@ -20,14 +20,25 @@
         <sheet>
           <group>
             <field name="employee_id" />
-            <field name="contract_id" />
+            <field name="working_days" />
             <field name="month" />
             <field name="year" />
-            <field name="working_days" />
             <field name="total_salary" readonly="1" />
           </group>
         </sheet>
       </form>
+    </field>
+  </record>
+
+  <record id="view_payroll_payslip_search" model="ir.ui.view">
+    <field name="name">payroll.payslip.search</field>
+    <field name="model">payroll.payslip</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="employee_id" />
+        <filter name="group_by_employee" string="Employee" context="{'group_by': 'employee_id'}" />
+        <filter name="group_by_month" string="Month" context="{'group_by': 'month'}" />
+      </search>
     </field>
   </record>
 

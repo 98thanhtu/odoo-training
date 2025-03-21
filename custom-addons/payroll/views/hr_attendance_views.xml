@@ -9,7 +9,7 @@
             <field name="employee_id" />
             <field name="check_in" required="1" />
             <field name="check_out" required="1" />
-            <field name="duration" />
+            <field name="worked_hours" />
           </group>
         </sheet>
       </form>
@@ -24,8 +24,21 @@
         <field name="employee_id" />
         <field name="check_in" />
         <field name="check_out" />
-        <field name="duration" />
+        <field name="worked_hours" />
       </tree>
+    </field>
+  </record>
+
+  <record id="payroll_attendance_search" model="ir.ui.view">
+    <field name="name">payroll.attendance.search</field>
+    <field name="model">payroll.attendance</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="employee_id" />
+        <field name="check_in" />
+        <field name="check_out" />
+        <filter name="group_by_employee" string="Employee" context="{'group_by': 'employee_id'}" />
+      </search>
     </field>
   </record>
 
