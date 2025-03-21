@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_hr_manager" model="res.groups">
+        <field name="name">HR Manager</field>
+        <field name="category_id" ref="base.module_category_human_resources" />
+        <field name="users" eval="[(4, ref('base.user_admin'))]" />
+    </record>
+
+    <record id="group_employee" model="res.groups">
+        <field name="name">Employee</field>
+        <field name="category_id" ref="base.module_category_human_resources" />
+    </record>
+
+    <record id="rule_employee_see_own" model="ir.rule">
+        <field name="name">Employees can only see their own records</field>
+        <field name="model_id" ref="payroll.model_payroll_employee" />
+        <field name="groups" eval="[(4, ref('group_employee'))]" />
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+    <record id="payroll_contract_employee_rule" model="ir.rule">
+        <field name="name">Employee: Only See Own Contracts</field>
+        <field name="model_id" ref="model_payroll_contract" />
+        <field name="groups" eval="[(4, ref('payroll.group_employee'))]" />
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+    <record id="payroll_payslip_employee_rule" model="ir.rule">
+        <field name="name">Employee: Only See Own Payslip</field>
+        <field name="model_id" ref="model_payroll_payslip" />
+        <field name="groups" eval="[(4, ref('payroll.group_employee'))]" />
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+    <record id="payroll_attendance_employee_rule" model="ir.rule">
+        <field name="name">Employee: Only See Own Attendance</field>
+        <field name="model_id" ref="model_payroll_attendance" />
+        <field name="groups" eval="[(4, ref('payroll.group_employee'))]" />
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+</odoo>

@@ -22,9 +22,12 @@ Long description of module's purpose
 
     # always loaded
     'data': [
+      'security/payroll_security.xml',
+      'security/ir.model.access.csv',
       'views/hr_employee_views.xml',
       'views/hr_contract_views.xml',
-      'views/hr_payroll_views.xml'
+      'views/hr_payslip_views.xml',
+      'views/hr_attendance_views.xml',
     ],
     'installable': True,
     'application': True,

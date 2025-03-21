@@ -1,10 +1,14 @@
 <odoo>
   <record id="view_contract_tree" model="ir.ui.view">
-    <field name="name">hr.contract.tree</field>
-    <field name="model">hr.contract</field>
+    <field name="name">payroll.contract.tree</field>
+    <field name="model">payroll.contract</field>
     <field name="arch" type="xml">
       <tree>
-        <field name="employee_id" />
+        <field name="employee_id" invisible="0"/>
+        <field name="contract_type" />
+        <field name="start_date" />
+        <field name="end_date" />
+        <field name="job_position" />
         <field name="basic_salary" />
         <field name="bonus" />
       </tree>
@@ -12,18 +16,38 @@
   </record>
 
   <record id="view_contract_form" model="ir.ui.view">
-    <field name="name">hr.contract.form</field>
-    <field name="model">hr.contract</field>
+    <field name="name">payroll.contract.form</field>
+    <field name="model">payroll.contract</field>
     <field name="arch" type="xml">
-      <form>
+      <form string="Payroll Contract">
         <sheet>
           <group>
-            <field name="employee_id" />
-            <field name="basic_salary" />
-            <field name="lunch_allowance" />
-            <field name="weekend_ot" />
-            <field name="holiday_ot" />
-            <field name="bonus" />
+            <group>
+              <field name="employee_id" />
+              <field name="contract_type" />
+              <field name="job_position" />
+            </group>
+            <group>
+              <field name="start_date" />
+              <field name="end_date" />
+            </group>
+          </group>
+          <group>
+            <group string="Salary Information">
+              <field name="basic_salary" />
+              <field name="lunch_allowance" />
+              <field name="weekend_ot" />
+              <field name="holiday_ot" />
+              <field name="bonus" />
+            </group>
+            <group string="Insurance Contributions">
+              <field name="company_si" />
+              <field name="employee_si" />
+              <field name="company_hi" />
+              <field name="employee_hi" />
+              <field name="company_ui" />
+              <field name="employee_ui" />
+            </group>
           </group>
         </sheet>
       </form>
@@ -32,7 +56,7 @@
 
   <record id="action_contract" model="ir.actions.act_window">
     <field name="name">Contracts</field>
-    <field name="res_model">hr.contract</field>
+    <field name="res_model">payroll.contract</field>
     <field name="view_mode">tree,form</field>
   </record>
 

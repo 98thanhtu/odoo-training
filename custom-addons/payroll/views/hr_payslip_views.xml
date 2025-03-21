@@ -1,7 +1,7 @@
 <odoo>
-  <record id="view_payroll_tree" model="ir.ui.view">
-    <field name="name">hr.payroll.tree</field>
-    <field name="model">hr.payroll</field>
+  <record id="view_payslip_tree" model="ir.ui.view">
+    <field name="name">payroll.payslip.tree</field>
+    <field name="model">payroll.payslip</field>
     <field name="arch" type="xml">
       <tree>
         <field name="employee_id" />
@@ -12,9 +12,9 @@
     </field>
   </record>
 
-  <record id="view_payroll_form" model="ir.ui.view">
-    <field name="name">hr.payroll.form</field>
-    <field name="model">hr.payroll</field>
+  <record id="view_payslip_form" model="ir.ui.view">
+    <field name="name">payroll.payslip.form</field>
+    <field name="model">payroll.payslip</field>
     <field name="arch" type="xml">
       <form>
         <sheet>
@@ -31,11 +31,11 @@
     </field>
   </record>
 
-  <record id="action_payroll" model="ir.actions.act_window">
-    <field name="name">Payroll</field>
-    <field name="res_model">hr.payroll</field>
+  <record id="action_payslip" model="ir.actions.act_window">
+    <field name="name">Payslip</field>
+    <field name="res_model">payroll.payslip</field>
     <field name="view_mode">tree,form</field>
   </record>
 
-  <menuitem id="menu_payroll" name="Payroll" parent="menu_hr_root" action="action_payroll" />
+  <menuitem id="menu_payslip" name="Payslips" parent="menu_hr_root" action="action_payslip" />
 </odoo>

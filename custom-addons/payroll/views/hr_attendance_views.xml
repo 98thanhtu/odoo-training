@@ -1,0 +1,39 @@
+<odoo>
+  <record id="view_payroll_attendance_form" model="ir.ui.view">
+    <field name="name">payroll.attendance.form</field>
+    <field name="model">payroll.attendance</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="employee_id" />
+            <field name="check_in" required="1" />
+            <field name="check_out" required="1" />
+            <field name="duration" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_payroll_attendance_tree" model="ir.ui.view">
+    <field name="name">payroll.attendance.tree</field>
+    <field name="model">payroll.attendance</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="employee_id" />
+        <field name="check_in" />
+        <field name="check_out" />
+        <field name="duration" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="action_attendance" model="ir.actions.act_window">
+    <field name="name">Attendances</field>
+    <field name="res_model">payroll.attendance</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="menu_attendance" name="Attendances" parent="menu_hr_root" action="action_attendance" />
+</odoo>
