@@ -6,7 +6,7 @@ class Payslip(models.Model):
     _description = 'Payslip'
 
     employee_id = fields.Many2one('payroll.employee', string='Employee', required=True)
-    contract_id = fields.Many2one('payroll.contract', string='Contract', required=True, compute='_compute_contract', store=True)
+    contract_id = fields.Many2one('payroll.contract', string='Contract', compute='_compute_contract', store=True)
     month = fields.Selection([(str(num), str(num)) for num in range(1, 13)], string='Month', required=True)
     year = fields.Integer(string='Year', compute='_compute_contract', store=True)
     working_days = fields.Integer(string='Working Days', compute='_compute_working_days', store=True)
