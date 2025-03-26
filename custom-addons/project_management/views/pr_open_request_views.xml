@@ -10,13 +10,14 @@
           <group>
             <field name="code" />
             <field name="project_name" />
-            <field name="pm_id" />
-            <field name="dev_ids" widget="many2many_tags" />
-            <field name="qc_ids" widget="many2many_tags" />
+            <field name="pm_id" domain="[('role', '=', 'pm')]" />
+            <field name="qc_ids" domain="[('role', '=', 'qc')]" widget="many2many_tags" />
+            <field name="dev_ids" domain="[('role', '=', 'dev')]" widget="many2many_tags" />
             <field name="start_date" />
+            <field name="end_date" />
             <field name="description" />
             <field name="status" readonly="1" create="false" />
-            <field name="project_id" readonly="1" create="false" />
+            <!-- <field name="project_id" readonly="1" create="false" /> -->
           </group>
           <footer>
             <button name="approve_request"
@@ -29,6 +30,24 @@
     </field>
   </record>
 
+  <record id="view_pr_open_request_tree" model="ir.ui.view">
+    <field name="name">pr.open.request.tree</field>
+    <field name="model">pr.open.request</field>
+    <field name="arch" type="xml">
+      <tree string="Project Opening Requests">
+        <field name="code" />
+        <field name="project_name" />
+        <field name="pm_id" domain="[('role', '=', 'pm')]" />
+        <field name="qc_ids" domain="[('role', '=', 'qc')]" />
+        <field name="dev_ids" domain="[('role', '=', 'dev')]" />
+        <field name="status" />
+        <field name="start_date" />
+        <field name="end_date" />
+        <!-- <field name="project_id" /> -->
+      </tree>
+    </field>
+  </record>
+
   <!-- Action -->
   <record id="action_pr_open_request" model="ir.actions.act_window">
     <field name="name">Open Project Requests</field>
@@ -38,6 +57,7 @@
 
   <!-- Menu Item -->
   <menuitem id="pr_menu_open_requests"
+    parent="menu_pr_root"
     name="Open Project Requests"
     action="action_pr_open_request"
     sequence="30" />

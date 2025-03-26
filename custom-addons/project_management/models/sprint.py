@@ -4,7 +4,7 @@ class Sprint(models.Model):
     _name = 'pr.sprint'
     _description = 'Sprint'
 
-    code = fields.Char(string="Sprint Code", required=True, copy=False, readonly=True, default=lambda self: 'New')
+    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
     name = fields.Char(string="Sprint Name", required=True)
     project_id = fields.Many2one('pr.project', string="Project", required=True)
     start_date = fields.Date(string="Start Date", required=True)
@@ -14,3 +14,9 @@ class Sprint(models.Model):
         ('open', 'Open'),
         ('closed', 'Closed')
     ], string="Status", default='draft')
+
+    @api.model
+    def create(self, vals):
+        record = super(Sprint, self).create(vals)
+        record.code = f"SPR{record.id:05d}"
+        return record

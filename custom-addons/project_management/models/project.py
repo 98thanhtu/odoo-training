@@ -6,7 +6,7 @@ class Project(models.Model):
     _description = 'Project Management'
 
     name = fields.Char(string='Name', required=True, unique=True)
-    code = fields.Char(string='Code', readonly=True, copy=False)
+    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date')
     state = fields.Selection([
@@ -33,8 +33,9 @@ class Project(models.Model):
 
     @api.model
     def create(self, vals):
-        vals['code'] = self.env['ir.sequence'].next_by_code('pr.project') or 'PRJ00001'
-        return super(Project, self).create(vals)
+        record = super(Project, self).create(vals)
+        record.code = f"PRJ{record.id:05d}"
+        return record
 
     @api.constrains('start_date', 'end_date')
     def _check_dates(self):

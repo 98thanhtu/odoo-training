@@ -4,7 +4,7 @@ class ProjectCloseRequest(models.Model):
     _name = 'dpr.close.request'
     _description = 'Project Closing Request'
 
-    code = fields.Char(string="Request Code", required=True, copy=False, readonly=True, default=lambda self: 'New')
+    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
     project_id = fields.Many2one('dpr.project', string="Project", required=True)
     pm_id = fields.Many2one('dpr.member', string="Project Manager", required=True)
     end_date = fields.Date(string="End Date", required=True)
@@ -16,3 +16,9 @@ class ProjectCloseRequest(models.Model):
         ('cancelled', 'Cancelled')
     ], string="Status", default='draft')
     cancel_reason = fields.Text(string="Cancel Reason")
+
+    @api.model
+    def create(self, vals):
+        record = super(ProjectCloseRequest, self).create(vals)
+        record.code = f"RCJ{record.id:05d}"
+        return record

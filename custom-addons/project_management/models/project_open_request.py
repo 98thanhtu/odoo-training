@@ -4,7 +4,7 @@ class ProjectOpenRequest(models.Model):
     _name = 'pr.open.request'
     _description = 'Project Opening Request'
 
-    code = fields.Char(string="Request Code", required=True, copy=False, readonly=True, default=lambda self: 'New')
+    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
     project_name = fields.Char(string="Project Name", required=True)
     pm_id = fields.Many2one('pr.member', string="Project Manager", required=True)
     dev_ids = fields.Many2many('pr.member', 'pr_open_request_dev_rel', 'request_id', 'member_id', string="Developers")
@@ -19,7 +19,7 @@ class ProjectOpenRequest(models.Model):
         ('cancelled', 'Cancelled')
     ], string="Status", default='draft')
     cancel_reason = fields.Text(string="Cancel Reason")
-    project_id = fields.Many2one('pr.project', string="Linked Project", readonly=True)
+    project_id = fields.Many2one('pr.project', string="Project", readonly=True)
 
     def approve_request(self):
         for record in self:
@@ -44,3 +44,9 @@ class ProjectOpenRequest(models.Model):
         for pr in self:
             if pr.end_date and pr.end_date < pr.start_date:
                 raise ValidationError('End Date must be greater than Start Date!')
+
+    @api.model
+    def create(self, vals):
+        record = super(ProjectOpenRequest, self).create(vals)
+        record.code = f"ROP{record.id:05d}"
+        return record

@@ -4,7 +4,7 @@ class Task(models.Model):
     _name = 'pr.task'
     _description = 'Task'
 
-    code = fields.Char(string="Task Code", required=True, copy=False, readonly=True, default=lambda self: 'New')
+    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
     name = fields.Char(string="Task Name", required=True)
     project_id = fields.Many2one('pr.project', string="Project", required=True)
     sprint_id = fields.Many2one('pr.sprint', string="Sprint")
@@ -26,3 +26,9 @@ class Task(models.Model):
         ('in_progress', 'In Progress'),
         ('done', 'Done')
     ], string="Progress Status", default='not_started')
+
+    @api.model
+    def create(self, vals):
+        record = super(Task, self).create(vals)
+        record.code = f"T{record.id:05d}"
+        return record
