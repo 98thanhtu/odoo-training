@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_pr_member_form" model="ir.ui.view">
+    <field name="name">pr.member.form</field>
+    <field name="model">pr.member</field>
+    <field name="arch" type="xml">
+      <form string="Project Member">
+        <sheet>
+          <group>
+            <field name="name" />
+            <field name="address" />
+            <field name="gender" />
+            <field name="date_of_birth" />
+            <field name="role" />
+            <field name="user_id" />
+            <!-- <field name="project_ids" widget="many2many_tags" /> -->
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_pr_member_tree" model="ir.ui.view">
+    <field name="name">pr.member.tree</field>
+    <field name="model">pr.member</field>
+    <field name="arch" type="xml">
+      <tree string="Project Members">
+        <field name="name" />
+        <field name="address" />
+        <field name="gender" />
+        <field name="date_of_birth" />
+        <field name="role" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="pr_member_action" model="ir.actions.act_window">
+    <field name="name">Project Members</field>
+    <field name="res_model">pr.member</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="menu_pr_root" name="Project Management" sequence="10" />
+
+  <menuitem id="menu_pr_member" name="Members"
+    parent="menu_pr_root"
+    action="pr_member_action" />
+</odoo>

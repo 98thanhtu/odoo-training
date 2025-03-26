@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Form View -->
+  <record id="view_pr_open_request_form" model="ir.ui.view">
+    <field name="name">pr.open.request.form</field>
+    <field name="model">pr.open.request</field>
+    <field name="arch" type="xml">
+      <form string="Project Opening Request">
+        <sheet>
+          <group>
+            <field name="code" />
+            <field name="project_name" />
+            <field name="pm_id" />
+            <field name="dev_ids" widget="many2many_tags" />
+            <field name="qc_ids" widget="many2many_tags" />
+            <field name="start_date" />
+            <field name="description" />
+            <field name="status" readonly="1" create="false" />
+            <field name="project_id" readonly="1" create="false" />
+          </group>
+          <footer>
+            <button name="approve_request"
+              type="object"
+              class="btn btn-primary"
+              string="Approve" />
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Action -->
+  <record id="action_pr_open_request" model="ir.actions.act_window">
+    <field name="name">Open Project Requests</field>
+    <field name="res_model">pr.open.request</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- Menu Item -->
+  <menuitem id="pr_menu_open_requests"
+    name="Open Project Requests"
+    action="action_pr_open_request"
+    sequence="30" />
+</odoo>
