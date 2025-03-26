@@ -16,5 +16,5 @@ class ProjectMember(models.Model):
     role = fields.Selection([
         ('pm', 'Project Manager'),
         ('dev', 'Developer'),
-        ('qc', 'Quality Control')
+        ('qc', 'QC')
     ], string="Role", required=True)

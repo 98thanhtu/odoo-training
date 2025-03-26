@@ -8,7 +8,7 @@ class ProjectOpenRequest(models.Model):
     project_name = fields.Char(string="Project Name", required=True)
     pm_id = fields.Many2one('pr.member', string="Project Manager", required=True)
     dev_ids = fields.Many2many('pr.member', 'pr_open_request_dev_rel', 'request_id', 'member_id', string="Developers")
-    qc_ids = fields.Many2many('pr.member', 'pr_open_request_qc_rel', 'request_id', 'member_id', string="Quality Control")
+    qc_ids = fields.Many2many('pr.member', 'pr_open_request_qc_rel', 'request_id', 'member_id', string="QC")
     start_date = fields.Date(string="Start Date", required=True)
     end_date = fields.Date(string="End Date", required=True)
     description = fields.Text(string="Description")

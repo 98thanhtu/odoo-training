@@ -24,8 +24,9 @@ Long description of module's purpose
     'data': [
         'views/pr_member_views.xml',
         'views/pr_open_request_views.xml',
+        'views/pr_close_request_views.xml',
+        'views/pr_project_views.xml',
         # 'security/ir.model.access.csv',
-        # 'views/views.xml',
     ],
     # only loaded in demonstration mode
     'installable': True,

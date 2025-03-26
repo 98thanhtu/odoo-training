@@ -12,24 +12,11 @@ class Project(models.Model):
     state = fields.Selection([
         ('open', 'Open'),
         ('closed', 'Close')
-    ], default='open', string='Status')
-    pm_id = fields.Many2one('res.users', string='PM')
-    dev_ids = fields.Many2many(
-        'pr.member',
-        'pr_project_dev_rel',
-        'request_id',
-        'member_id',
-        string="Developers"
-    )
-
-    qc_ids = fields.Many2many(
-        'pr.member',
-        'pr_project_qc_rel',
-        'request_id',
-        'member_id',
-        string="Quality Control"
-    )
-    description = fields.Text(string='Mô tả')
+    ], default='closed', string='Status')
+    pm_id = fields.Many2one('pr.member', string="Project Manager", required=True)
+    dev_ids = fields.Many2many('pr.member', 'pr_project_dev_rel', 'request_id', 'member_id', string="Developers")
+    qc_ids = fields.Many2many('pr.member', 'pr_project_qc_rel', 'request_id', 'member_id', string="QC")
+    description = fields.Text(string='Description')
 
     @api.model
     def create(self, vals):

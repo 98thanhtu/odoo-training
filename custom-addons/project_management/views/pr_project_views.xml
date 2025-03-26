@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Form View -->
+  <record id="view_pr_project_form" model="ir.ui.view">
+    <field name="name">pr.project.form</field>
+    <field name="model">pr.project</field>
+    <field name="arch" type="xml">
+      <form string="Project">
+        <sheet>
+          <group>
+            <field name="code" />
+            <field name="name" />
+            <field name="start_date" />
+            <field name="end_date" />
+            <field name="pm_id" domain="[('role', '=', 'pm')]" />
+            <field name="qc_ids" domain="[('role', '=', 'qc')]" />
+            <field name="dev_ids" domain="[('role', '=', 'dev')]" />
+            <field name="description" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_pr_project_tree" model="ir.ui.view">
+    <field name="name">pr.project.tree</field>
+    <field name="model">pr.project</field>
+    <field name="arch" type="xml">
+      <tree string="Project">
+        <field name="code" />
+        <field name="name" />
+        <field name="state" />
+        <field name="start_date" />
+        <field name="end_date" />
+        <field name="pm_id" domain="[('role', '=', 'pm')]" />
+        <field name="qc_ids" domain="[('role', '=', 'qc')]" />
+        <field name="dev_ids" domain="[('role', '=', 'dev')]" />
+      </tree>
+    </field>
+  </record>
+
+  <!-- Action -->
+  <record id="action_pr_project" model="ir.actions.act_window">
+    <field name="name">Project</field>
+    <field name="res_model">pr.project</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- Menu Item -->
+  <menuitem id="pr_menu_projects"
+    parent="menu_pr_root"
+    name="Project"
+    action="action_pr_project"
+    sequence="1" />
+</odoo>

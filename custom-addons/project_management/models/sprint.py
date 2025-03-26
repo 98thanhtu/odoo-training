@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 class Sprint(models.Model):
     _name = 'pr.sprint'
@@ -20,3 +20,9 @@ class Sprint(models.Model):
         record = super(Sprint, self).create(vals)
         record.code = f"SPR{record.id:05d}"
         return record
+
+    @api.constrains('start_date', 'end_date')
+    def _check_dates(self):
+        for pr in self:
+            if pr.end_date and pr.end_date < pr.start_date:
+                raise ValidationError('End Date must be greater than Start Date!')

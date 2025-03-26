@@ -1,12 +1,12 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 class ProjectCloseRequest(models.Model):
-    _name = 'dpr.close.request'
+    _name = 'pr.close.request'
     _description = 'Project Closing Request'
 
-    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
-    project_id = fields.Many2one('dpr.project', string="Project", required=True)
-    pm_id = fields.Many2one('dpr.member', string="Project Manager", required=True)
+    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='')
+    project_id = fields.Many2one('pr.project', string="Project", required=True)
+    pm_id = fields.Many2one('pr.member', string="Project Manager", required=True)
     end_date = fields.Date(string="End Date", required=True)
     close_reason = fields.Text(string="Close Reason")
     status = fields.Selection([

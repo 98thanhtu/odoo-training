@@ -36,6 +36,7 @@
     <field name="arch" type="xml">
       <tree string="Project Opening Requests">
         <field name="code" />
+        <field name="project_id" />
         <field name="project_name" />
         <field name="pm_id" domain="[('role', '=', 'pm')]" />
         <field name="qc_ids" domain="[('role', '=', 'qc')]" />
@@ -43,7 +44,7 @@
         <field name="status" />
         <field name="start_date" />
         <field name="end_date" />
-        <!-- <field name="project_id" /> -->
+        <field name="cancel_reason" />
       </tree>
     </field>
   </record>
