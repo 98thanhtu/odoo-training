@@ -26,6 +26,7 @@ Long description of module's purpose
         'views/pr_open_request_views.xml',
         'views/pr_close_request_views.xml',
         'views/pr_project_views.xml',
+        'views/pr_task_views.xml',
         # 'security/ir.model.access.csv',
     ],
     # only loaded in demonstration mode

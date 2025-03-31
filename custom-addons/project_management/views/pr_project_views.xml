@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-  <!-- Form View -->
+  <record id="view_pr_project_kanban" model="ir.ui.view">
+    <field name="name">pr.project.kanban</field>
+    <field name="model">pr.project</field>
+    <field name="arch" type="xml">
+      <kanban>
+        <field name="code" />
+        <field name="name" />
+        <field name="state" />
+        <field name="task_count" />
+        <templates>
+          <t t-name="kanban-box">
+            <div class="o_kanban_content position-relative">
+              <div class="position-absolute top-0 end-0 p-2">
+                <div class="dropdown cursor-pointer">
+                  <a class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" />
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li class="px-2">
+                      <a type="object" name="edit_project">Edit</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <a type="object" name="open_tasks" class="o_kanban_global_click">
+                <strong>
+                  <div t-esc="record.code.value" />
+                  <div t-esc="record.name.value" />
+                </strong>
+                <div>
+                  <span>Tasks: </span>
+                  <span class="oe_kanban_counter" t-esc="record.task_count.value" />
+                </div>
+              </a>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
   <record id="view_pr_project_form" model="ir.ui.view">
     <field name="name">pr.project.form</field>
     <field name="model">pr.project</field>
@@ -8,48 +46,35 @@
       <form string="Project">
         <sheet>
           <group>
-            <field name="code" />
             <field name="name" />
+            <field name="code" readonly="1" />
             <field name="start_date" />
             <field name="end_date" />
-            <field name="pm_id" domain="[('role', '=', 'pm')]" />
-            <field name="qc_ids" domain="[('role', '=', 'qc')]" />
-            <field name="dev_ids" domain="[('role', '=', 'dev')]" />
+            <field name="pm_id" />
+            <field name="dev_ids" widget="many2many_tags" />
+            <field name="qc_ids" widget="many2many_tags" />
             <field name="description" />
           </group>
         </sheet>
+        <div class="oe_button_box" name="button_box">
+          <button class="oe_stat_button" icon="fa-tasks" type="object" name="open_tasks">
+            <field name="task_count" widget="statinfo" string="Tasks" />
+          </button>
+        </div>
       </form>
     </field>
   </record>
 
-  <record id="view_pr_project_tree" model="ir.ui.view">
-    <field name="name">pr.project.tree</field>
-    <field name="model">pr.project</field>
-    <field name="arch" type="xml">
-      <tree string="Project">
-        <field name="code" />
-        <field name="name" />
-        <field name="state" />
-        <field name="start_date" />
-        <field name="end_date" />
-        <field name="pm_id" domain="[('role', '=', 'pm')]" />
-        <field name="qc_ids" domain="[('role', '=', 'qc')]" />
-        <field name="dev_ids" domain="[('role', '=', 'dev')]" />
-      </tree>
-    </field>
-  </record>
 
-  <!-- Action -->
   <record id="action_pr_project" model="ir.actions.act_window">
-    <field name="name">Project</field>
+    <field name="name">Projects</field>
     <field name="res_model">pr.project</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">kanban,tree,form</field>
   </record>
 
-  <!-- Menu Item -->
   <menuitem id="pr_menu_projects"
     parent="menu_pr_root"
-    name="Project"
+    name="Projects"
     action="action_pr_project"
     sequence="1" />
 </odoo>

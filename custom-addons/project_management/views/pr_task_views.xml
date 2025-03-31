@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_pr_task_kanban" model="ir.ui.view">
+    <field name="name">pr.task.kanban</field>
+    <field name="model">pr.task</field>
+    <field name="arch" type="xml">
+      <kanban>
+        <field name="name" />
+        <field name="status" />
+        <field name="code" />
+        <templates>
+          <t t-name="kanban-box">
+            <div class="oe_kanban_global_click o_kanban_record">
+              <div class="oe_kanban_content">
+                <strong>
+                  <div><t t-esc="record.code.value" /></div>
+                  <div><t t-esc="record.name.value" /></div>
+                </strong>
+                <div>
+                  <span>Status: </span>
+                  <span class="badge badge-info" t-esc="record.status.value" />
+                </div>
+              </div>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
+  <record id="view_pr_task_form" model="ir.ui.view">
+    <field name="name">pr.task.form</field>
+    <field name="model">pr.task</field>
+    <field name="arch" type="xml">
+      <form string="Task">
+        <sheet>
+          <group>
+            <field name="code" readonly="1" />
+            <field name="name" />
+            <field name="project_id" readonly="1" />
+            <field name="sprint_id" />
+            <field name="task_type_id" />
+          </group>
+          <group>
+            <field name="dev_id" domain="[('role', '=', 'dev')]" />
+            <field name="qc_id" domain="[('role', '=', 'qc')]" />
+          </group>
+          <group>
+            <field name="dev_deadline" />
+            <field name="qc_deadline" />
+          </group>
+          <group>
+            <field name="status" />
+            <field name="progress_status" />
+          </group>
+          <group>
+            <field name="description" widget="text" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_pr_project_form_update" model="ir.ui.view">
+    <field name="name">pr.project.form.update</field>
+    <field name="model">pr.project</field>
+    <field name="inherit_id" ref="view_pr_project_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//form/sheet" position="before">
+        <div class="oe_button_box" name="button_box">
+          <button class="oe_stat_button" icon="fa-tasks" type="object" name="open_tasks">
+            <field name="task_count" widget="statinfo" string="Tasks" />
+          </button>
+        </div>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="action_pr_project_tasks" model="ir.actions.act_window">
+    <field name="name">Project Tasks</field>
+    <field name="res_model">pr.task</field>
+    <field name="view_mode">kanban,tree,form</field>
+    <field name="domain">[('project_id', '=', active_id)]</field>
+    <field name="context">{'default_project_id': active_id}</field>
+  </record>
+</odoo>

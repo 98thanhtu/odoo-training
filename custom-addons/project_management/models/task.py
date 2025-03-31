@@ -9,14 +9,14 @@ class Task(models.Model):
     project_id = fields.Many2one('pr.project', string="Project", required=True)
     sprint_id = fields.Many2one('pr.sprint', string="Sprint")
     dev_id = fields.Many2one('pr.member', string="Developer")
-    qc_id = fields.Many2one('pr.member', string="Quality Control")
+    qc_id = fields.Many2one('pr.member', string="QC")
     task_type_id = fields.Many2one('pr.task.type', string="Task Type")
     dev_deadline = fields.Date(string="Dev Deadline")
     qc_deadline = fields.Date(string="QC Deadline")
     status = fields.Selection([
         ('new', 'New'),
         ('dev', 'In Development'),
-        ('qc', 'Quality Control'),
+        ('qc', 'QC'),
         ('done', 'Done')
     ], string="Status", default='new')
     description = fields.Text(string="Description")
