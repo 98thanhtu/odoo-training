@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="menu_pr_root" name="Project Management" sequence="1" />
+
+  <menuitem id="pr_menu_projects"
+    parent="menu_pr_root"
+    name="Projects"
+    action="action_pr_project"
+    sequence="1" />
+
+  <menuitem id="menu_pr_sprint" name="Sprints"
+    parent="menu_pr_root"
+    action="pr_sprint_action" />
+
+  <!-- <menuitem id="menu_pr_task" name="Tasks"
+    parent="menu_pr_root"
+    action="pr_task_action" /> -->
+
+  <!-- <menuitem id="menu_pr_member" name="Members"
+    parent="menu_pr_root"
+    action="pr_member_action" /> -->
+
+  <menuitem id="pr_menu_close_requests"
+    parent="menu_pr_root"
+    name="Close Project"
+    action="action_pr_close_request"
+    sequence="40" />
+
+  <menuitem id="pr_menu_open_requests"
+    parent="menu_pr_root"
+    name="Open Project"
+    action="action_pr_open_request"
+    sequence="30" />
+</odoo>

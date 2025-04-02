@@ -55,11 +55,4 @@
     <field name="res_model">pr.open.request</field>
     <field name="view_mode">tree,form</field>
   </record>
-
-  <!-- Menu Item -->
-  <menuitem id="pr_menu_open_requests"
-    parent="menu_pr_root"
-    name="Open Project Requests"
-    action="action_pr_open_request"
-    sequence="30" />
 </odoo>

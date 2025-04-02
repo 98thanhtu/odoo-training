@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Form View -->
+  <record id="view_pr_task_type_form" model="ir.ui.view">
+    <field name="name">pr.task.type.form</field>
+    <field name="model">pr.task.type</field>
+    <field name="arch" type="xml">
+      <form string="Task Type">
+        <sheet>
+          <group>
+            <field name="code" />
+            <field name="name" />
+            <field name="active" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_pr_task_type_tree" model="ir.ui.view">
+    <field name="name">pr.task.type.tree</field>
+    <field name="model">pr.task.type</field>
+    <field name="arch" type="xml">
+      <tree string="Task Types">
+        <field name="code" />
+        <field name="name" />
+        <field name="active" />
+      </tree>
+    </field>
+  </record>
+
+  <!-- Action -->
+  <record id="action_pr_task_type" model="ir.actions.act_window">
+    <field name="name">Task Type</field>
+    <field name="res_model">pr.task.type</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- Menu Item -->
+  <!-- <menuitem id="pr_menu_task_types"
+    parent="menu_pr_root"
+    name="Task Type"
+    action="action_pr_task_type"
+    sequence="40" /> -->
+</odoo>

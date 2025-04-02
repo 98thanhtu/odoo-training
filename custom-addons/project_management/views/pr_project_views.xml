@@ -56,11 +56,11 @@
             <field name="description" />
           </group>
         </sheet>
-        <div class="oe_button_box" name="button_box">
+        <!-- <div class="oe_button_box" name="button_box">
           <button class="oe_stat_button" icon="fa-tasks" type="object" name="open_tasks">
             <field name="task_count" widget="statinfo" string="Tasks" />
           </button>
-        </div>
+        </div> -->
       </form>
     </field>
   </record>
@@ -71,10 +71,4 @@
     <field name="res_model">pr.project</field>
     <field name="view_mode">kanban,tree,form</field>
   </record>
-
-  <menuitem id="pr_menu_projects"
-    parent="menu_pr_root"
-    name="Projects"
-    action="action_pr_project"
-    sequence="1" />
 </odoo>

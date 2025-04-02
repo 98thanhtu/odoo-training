@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class Sprint(models.Model):
     _name = 'pr.sprint'
@@ -21,8 +22,26 @@ class Sprint(models.Model):
         record.code = f"SPR{record.id:05d}"
         return record
 
-    @api.constrains('start_date', 'end_date')
-    def _check_dates(self):
-        for pr in self:
-            if pr.end_date and pr.end_date < pr.start_date:
+    @api.constrains('start_date', 'end_date', 'project_id')
+    def _check_sprint_constraints(self):
+        for sprint in self:
+            if sprint.end_date and sprint.end_date < sprint.start_date:
                 raise ValidationError('End Date must be greater than Start Date!')
+
+            overlapping_sprints = self.env['pr.sprint'].search([
+                ('project_id', '=', sprint.project_id.id),
+                ('id', '!=', sprint.id),
+                '|',
+                '&', ('start_date', '<=', sprint.start_date), ('end_date', '>=', sprint.start_date),
+                '&', ('start_date', '<=', sprint.end_date), ('end_date', '>=', sprint.end_date)
+            ])
+            if overlapping_sprints:
+                raise ValidationError('A project cannot have overlapping sprints!')
+
+            open_sprints = self.env['pr.sprint'].search_count([
+                ('project_id', '=', sprint.project_id.id),
+                ('status', '=', 'open'),
+                ('id', '!=', sprint.id)
+            ])
+            if sprint.status == 'open' and open_sprints > 0:
+                raise ValidationError('A project can only have one open sprint at a time!')

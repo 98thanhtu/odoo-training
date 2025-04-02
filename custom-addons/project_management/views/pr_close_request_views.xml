@@ -43,11 +43,4 @@
     <field name="res_model">pr.close.request</field>
     <field name="view_mode">tree,form</field>
   </record>
-
-  <!-- Menu Item -->
-  <menuitem id="pr_menu_close_requests"
-    parent="menu_pr_root"
-    name="Close Project Requests"
-    action="action_pr_close_request"
-    sequence="40" />
 </odoo>

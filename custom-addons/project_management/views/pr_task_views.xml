@@ -10,11 +10,15 @@
         <field name="code" />
         <templates>
           <t t-name="kanban-box">
-            <div class="oe_kanban_global_click o_kanban_record">
+            <div class="oe_kanban_global_click">
               <div class="oe_kanban_content">
                 <strong>
-                  <div><t t-esc="record.code.value" /></div>
-                  <div><t t-esc="record.name.value" /></div>
+                  <div>
+                    <t t-esc="record.code.value" />
+                  </div>
+                  <div>
+                    <t t-esc="record.name.value" />
+                  </div>
                 </strong>
                 <div>
                   <span>Status: </span>
@@ -39,7 +43,8 @@
             <field name="name" />
             <field name="project_id" readonly="1" />
             <field name="sprint_id" />
-            <field name="task_type_id" />
+            <field name="task_type_id" context="{'default_active': True}"
+              options="{'no_quick_create': False}" create="true" />
           </group>
           <group>
             <field name="dev_id" domain="[('role', '=', 'dev')]" />
@@ -61,7 +66,7 @@
     </field>
   </record>
 
-  <record id="view_pr_project_form_update" model="ir.ui.view">
+  <!-- <record id="view_pr_project_form_update" model="ir.ui.view">
     <field name="name">pr.project.form.update</field>
     <field name="model">pr.project</field>
     <field name="inherit_id" ref="view_pr_project_form" />
@@ -74,13 +79,27 @@
         </div>
       </xpath>
     </field>
-  </record>
+  </record> -->
 
-  <record id="action_pr_project_tasks" model="ir.actions.act_window">
+  <record id="pr_task_action" model="ir.actions.act_window">
     <field name="name">Project Tasks</field>
     <field name="res_model">pr.task</field>
     <field name="view_mode">kanban,tree,form</field>
-    <field name="domain">[('project_id', '=', active_id)]</field>
-    <field name="context">{'default_project_id': active_id}</field>
+    <!-- <field name="domain">[('project_id', '=', active_id)]</field>
+    <field name="context">{'default_project_id': active_id}</field> -->
+  </record>
+
+  <record id="view_pr_task_kanban_with_button" model="ir.ui.view">
+    <field name="name">pr.task.kanban.with.button</field>
+    <field name="model">pr.task</field>
+    <field name="inherit_id" ref="view_pr_task_kanban" />
+    <field name="arch" type="xml">
+      <xpath expr="//kanban/templates" position="before">
+        <header>
+          <button string="Update Newest Sprint" type="object" name="update_newest_sprint"
+            class="oe_highlight" />
+        </header>
+      </xpath>
+    </field>
   </record>
 </odoo>
