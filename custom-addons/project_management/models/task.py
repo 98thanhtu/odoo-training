@@ -8,7 +8,7 @@ class Task(models.Model):
     code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
     name = fields.Char(string="Task Name", required=True)
     project_id = fields.Many2one('pr.project', string="Project", required=True)
-    sprint_id = fields.Many2one('pr.sprint', string="Sprint")
+    sprint_id = fields.Many2one('pr.sprint', string="Sprint", required=True)
     dev_id = fields.Many2one(
         'pr.member',
         string="Developer",

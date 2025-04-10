@@ -30,7 +30,9 @@ Long description of module's purpose
         'views/pr_task_type_views.xml',
         'views/pr_sprint_views.xml',
         'views/pr_menu_views.xml',
-        # 'security/ir.model.access.csv',
+        'security/project_groups.xml',
+        'security/pr_security.xml',
+        'security/ir.model.access.csv',
     ],
     # only loaded in demonstration mode
     'installable': True,

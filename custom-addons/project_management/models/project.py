@@ -61,3 +61,13 @@ class Project(models.Model):
             'view_mode': 'form',
             'target': 'current',
         }
+
+    @api.constrains('name')
+    def _check_unique_name(self):
+        for project in self:
+            existing_project = self.env['pr.project'].search([
+                ('name', 'ilike', project.name),
+                ('id', '!=', project.id)
+            ], limit=1)
+            if existing_project:
+                raise ValidationError("Project Name must be unique.")

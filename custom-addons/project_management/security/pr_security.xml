@@ -1,0 +1,53 @@
+<odoo>
+  <!-- Project -->
+  <record id="project_rule_member" model="ir.rule">
+    <field name="name">Project Member Access</field>
+    <field name="model_id" ref="model_pr_project" />
+    <field name="domain_force">
+      ['|','|',('pm_id','=',user.id),('dev_ids','=',user.id),('qc_ids','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('project_management.group_project_member'))]" />
+  </record>
+
+  <record id="project_rule_pm" model="ir.rule">
+    <field name="name">Project PM Access</field>
+    <field name="model_id" ref="model_pr_project" />
+    <field name="domain_force">
+      ['|',('pm_id','=',user.id),('dev_ids','=',user.id),('qc_ids','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]" />
+  </record>
+
+  <!-- Sprint -->
+  <record id="sprint_rule" model="ir.rule">
+    <field name="name">Sprint Project Participant Access</field>
+    <field name="model_id" ref="model_pr_sprint" />
+    <field name="domain_force">
+      ['|','|',('project_id.pm_id','=',user.id),('project_id.dev_ids','=',user.id),('project_id.qc_ids','=',user.id)]</field>
+    <field name="groups"
+      eval="[(4, ref('project_management.group_project_member')), (4, ref('project_management.group_project_pm'))]" />
+  </record>
+
+  <!-- Task -->
+  <record id="task_rule" model="ir.rule">
+    <field name="name">Task Access for Project Members</field>
+    <field name="model_id" ref="model_pr_task" />
+    <field name="domain_force">
+      ['|','|',('project_id.pm_id','=',user.id),('project_id.dev_ids','=',user.id),('project_id.qc_ids','=',user.id)]</field>
+    <field name="groups"
+      eval="[(4, ref('project_management.group_project_member')), (4, ref('project_management.group_project_pm'))]" />
+  </record>
+
+  <!-- Request -->
+  <record id="open_request_rule_pm" model="ir.rule">
+    <field name="name">Open Project Request for PM</field>
+    <field name="model_id" ref="model_pr_open_request" /> <!-- đúng ID -->
+    <field name="domain_force">[('pm_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]" />
+  </record>
+
+  <record id="close_request_rule_pm" model="ir.rule">
+    <field name="name">Close Project Request for PM</field>
+    <field name="model_id" ref="model_pr_close_request" /> <!-- đúng ID -->
+    <field name="domain_force">[('project_id.pm_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]" />
+  </record>
+</odoo>

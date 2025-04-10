@@ -45,3 +45,15 @@ class Sprint(models.Model):
             ])
             if sprint.status == 'open' and open_sprints > 0:
                 raise ValidationError('A project can only have one open sprint at a time!')
+
+    def write(self, vals):
+        if 'status' in vals and vals['status'] == 'open':
+            for sprint in self:
+                existing_open = self.search_count([
+                    ('project_id', '=', sprint.project_id.id),
+                    ('status', '=', 'open'),
+                    ('id', '!=', sprint.id)
+                ])
+                if existing_open:
+                    raise ValidationError("Only one sprint can be open per project at a time.")
+        return super(Sprint, self).write(vals)

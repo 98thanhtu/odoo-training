@@ -41,7 +41,7 @@
           <group>
             <field name="code" readonly="1" />
             <field name="name" />
-            <field name="project_id" readonly="1" />
+            <field name="project_id" />
             <field name="sprint_id" />
             <field name="task_type_id" context="{'default_active': True}"
               options="{'no_quick_create': False}" create="true" />
@@ -66,40 +66,29 @@
     </field>
   </record>
 
-  <!-- <record id="view_pr_project_form_update" model="ir.ui.view">
-    <field name="name">pr.project.form.update</field>
-    <field name="model">pr.project</field>
-    <field name="inherit_id" ref="view_pr_project_form" />
+  <record id="view_pr_task_tree" model="ir.ui.view">
+    <field name="name">pr.task.tree</field>
+    <field name="model">pr.task</field>
     <field name="arch" type="xml">
-      <xpath expr="//form/sheet" position="before">
-        <div class="oe_button_box" name="button_box">
-          <button class="oe_stat_button" icon="fa-tasks" type="object" name="open_tasks">
-            <field name="task_count" widget="statinfo" string="Tasks" />
-          </button>
-        </div>
-      </xpath>
+      <tree string="Tasks">
+        <field name="code" readonly="1" />
+        <field name="name" />
+        <field name="project_id" readonly="1" />
+        <field name="sprint_id" />
+        <field name="status" />
+        <field name="progress_status" />
+        <field name="task_type_id" />
+        <field name="dev_id" domain="[('role', '=', 'dev')]" />
+        <field name="qc_id" domain="[('role', '=', 'qc')]" />
+        <field name="dev_deadline" />
+        <field name="qc_deadline" />
+      </tree>
     </field>
-  </record> -->
-
-  <record id="pr_task_action" model="ir.actions.act_window">
-    <field name="name">Project Tasks</field>
-    <field name="res_model">pr.task</field>
-    <field name="view_mode">kanban,tree,form</field>
-    <!-- <field name="domain">[('project_id', '=', active_id)]</field>
-    <field name="context">{'default_project_id': active_id}</field> -->
   </record>
 
-  <record id="view_pr_task_kanban_with_button" model="ir.ui.view">
-    <field name="name">pr.task.kanban.with.button</field>
-    <field name="model">pr.task</field>
-    <field name="inherit_id" ref="view_pr_task_kanban" />
-    <field name="arch" type="xml">
-      <xpath expr="//kanban/templates" position="before">
-        <header>
-          <button string="Update Newest Sprint" type="object" name="update_newest_sprint"
-            class="oe_highlight" />
-        </header>
-      </xpath>
-    </field>
+  <record id="pr_task_action" model="ir.actions.act_window">
+    <field name="name">Tasks</field>
+    <field name="res_model">pr.task</field>
+    <field name="view_mode">kanban,tree,form</field>
   </record>
 </odoo>

@@ -13,13 +13,13 @@
     parent="menu_pr_root"
     action="pr_sprint_action" />
 
-  <!-- <menuitem id="menu_pr_task" name="Tasks"
+  <menuitem id="menu_pr_task" name="Tasks"
     parent="menu_pr_root"
-    action="pr_task_action" /> -->
+    action="pr_task_action" />
 
-  <!-- <menuitem id="menu_pr_member" name="Members"
+  <menuitem id="menu_pr_member" name="Members"
     parent="menu_pr_root"
-    action="pr_member_action" /> -->
+    action="pr_member_action" />
 
   <menuitem id="pr_menu_close_requests"
     parent="menu_pr_root"

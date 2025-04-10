@@ -29,17 +29,9 @@
     </field>
   </record>
 
-  <!-- Action -->
   <record id="action_pr_task_type" model="ir.actions.act_window">
     <field name="name">Task Type</field>
     <field name="res_model">pr.task.type</field>
     <field name="view_mode">tree,form</field>
   </record>
-
-  <!-- Menu Item -->
-  <!-- <menuitem id="pr_menu_task_types"
-    parent="menu_pr_root"
-    name="Task Type"
-    action="action_pr_task_type"
-    sequence="40" /> -->
 </odoo>
