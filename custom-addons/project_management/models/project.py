@@ -13,9 +13,9 @@ class Project(models.Model):
         ('open', 'Open'),
         ('closed', 'Close')
     ], default='closed', string='Status')
-    pm_id = fields.Many2one('pr.member', string="Project Manager", required=True)
-    dev_ids = fields.Many2many('pr.member', 'pr_project_dev_rel', 'request_id', 'member_id', string="Developers")
-    qc_ids = fields.Many2many('pr.member', 'pr_project_qc_rel', 'request_id', 'member_id', string="QC")
+    pm_id = fields.Many2one('pr.member', string="Project Manager", required=True, domain=[('role', '=', 'pm')])
+    dev_ids = fields.Many2many('pr.member', 'pr_project_dev_rel', 'request_id', 'member_id', string="Developers", domain=[('role', '=', 'dev')])
+    qc_ids = fields.Many2many('pr.member', 'pr_project_qc_rel', 'request_id', 'member_id', string="QC", domain=[('role', '=', 'qc')])
     description = fields.Text(string='Description')
     task_ids = fields.One2many('pr.task', 'project_id', string="Tasks")
     task_count = fields.Integer(string="Task Count", compute="_compute_task_count")
@@ -35,6 +35,7 @@ class Project(models.Model):
     def action_close(self):
         for record in self:
             record.state = 'closed'
+
     def open_tasks(self):
         return {
             'type': 'ir.actions.act_window',
@@ -71,3 +72,27 @@ class Project(models.Model):
             ], limit=1)
             if existing_project:
                 raise ValidationError("Project Name must be unique.")
+
+    def action_update_newest_sprint(self):
+        Sprint = self.env['pr.sprint']
+        Task = self.env['pr.task']
+        for project in self:
+            open_sprint = Sprint.search([
+                ('project_id', '=', project.id),
+                ('state', '=', 'open')
+            ], limit=1, order='start_date desc')
+
+            if not open_sprint:
+                continue
+
+            old_sprint_tasks = Task.search([
+                ('project_id', '=', project.id),
+                ('sprint_id.state', '=', 'close'),
+                ('state', '!=', 'done')
+            ])
+
+            old_sprint_tasks.write({'sprint_id': open_sprint.id})
+
+    def weekly_report(self):
+        print(self)
+        print('=================== Test Schedule ===================')

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_task_report_urgent_tree" model="ir.ui.view">
+    <field name="name">pr.task.report.urgent.tree</field>
+    <field name="model">pr.task</field>
+    <field name="arch" type="xml">
+      <tree string="Report Deadline Tasks">
+        <field name="code"/>
+        <field name="name"/>
+        <field name="project_id"/>
+        <field name="dev_id"/>
+        <field name="qc_id"/>
+        <field name="dev_deadline"/>
+        <field name="qc_deadline"/>
+        <field name="status"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="action_task_report_deadline_urgent" model="ir.actions.act_window">
+    <field name="name">Report Deadline Tasks</field>
+    <field name="res_model">pr.task</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{}</field>
+    <field name="target">current</field>
+  </record>
+</odoo>

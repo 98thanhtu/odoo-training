@@ -39,14 +39,14 @@
   <!-- Request -->
   <record id="open_request_rule_pm" model="ir.rule">
     <field name="name">Open Project Request for PM</field>
-    <field name="model_id" ref="model_pr_open_request" /> <!-- đúng ID -->
+    <field name="model_id" ref="model_pr_open_request" />
     <field name="domain_force">[('pm_id','=',user.id)]</field>
     <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]" />
   </record>
 
   <record id="close_request_rule_pm" model="ir.rule">
     <field name="name">Close Project Request for PM</field>
-    <field name="model_id" ref="model_pr_close_request" /> <!-- đúng ID -->
+    <field name="model_id" ref="model_pr_close_request" />
     <field name="domain_force">[('project_id.pm_id','=',user.id)]</field>
     <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]" />
   </record>

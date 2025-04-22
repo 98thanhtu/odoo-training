@@ -22,3 +22,18 @@ class ProjectCloseRequest(models.Model):
         record = super(ProjectCloseRequest, self).create(vals)
         record.code = f"RCJ{record.id:05d}"
         return record
+
+    @api.constrains('project_id')
+    def _check_project_closed(self):
+        for record in self:
+            project = record.project_id
+            sprints = project.sprint_ids
+            tasks = project.task_ids
+
+            open_sprints = sprints.filtered(lambda s: s.state != 'close')
+            if open_sprints:
+                raise ValidationError("Cannot create project close request because there are unclosed sprints.")
+
+            unfinished_tasks = tasks.filtered(lambda t: t.state != 'done')
+            if unfinished_tasks:
+                raise ValidationError("Cannot create project close request because there are unfinished tasks.")

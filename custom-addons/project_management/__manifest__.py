@@ -30,9 +30,12 @@ Long description of module's purpose
         'views/pr_task_type_views.xml',
         'views/pr_sprint_views.xml',
         'views/pr_menu_views.xml',
+        'views/pr_task_report_sprint.xml',
+        'views/pr_task_report_urgent.xml',
         'security/project_groups.xml',
         'security/pr_security.xml',
         'security/ir.model.access.csv',
+        'data/ir_cron_job_weekly_report.xml',
     ],
     # only loaded in demonstration mode
     'installable': True,
