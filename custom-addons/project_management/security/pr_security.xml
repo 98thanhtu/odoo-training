@@ -1,42 +1,96 @@
 <odoo>
-  <!-- Project -->
-  <record id="project_rule_member" model="ir.rule">
-    <field name="name">Project Member Access</field>
-    <field name="model_id" ref="model_pr_project" />
-    <field name="domain_force">
-      ['|','|',('pm_id','=',user.id),('dev_ids','=',user.id),('qc_ids','=',user.id)]</field>
-    <field name="groups" eval="[(4, ref('project_management.group_project_member'))]" />
-  </record>
-
-  <record id="project_rule_pm" model="ir.rule">
-    <field name="name">Project PM Access</field>
-    <field name="model_id" ref="model_pr_project" />
-    <field name="domain_force">
-      ['|',('pm_id','=',user.id),('dev_ids','=',user.id),('qc_ids','=',user.id)]</field>
+  <!-- ==================== PROJECT ==================== -->
+  <!-- PM: Only see their own projects -->
+  <record id="rule_project_pm" model="ir.rule">
+    <field name="name">Project: PM can see own projects</field>
+    <field name="model_id" ref="project_management.model_pr_project" />
+    <field name="domain_force">[('pm_id.user_id', '=', user.id)]</field>
     <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]" />
   </record>
 
-  <!-- Sprint -->
-  <record id="sprint_rule" model="ir.rule">
-    <field name="name">Sprint Project Participant Access</field>
-    <field name="model_id" ref="model_pr_sprint" />
-    <field name="domain_force">
-      ['|','|',('project_id.pm_id','=',user.id),('project_id.dev_ids','=',user.id),('project_id.qc_ids','=',user.id)]</field>
-    <field name="groups"
-      eval="[(4, ref('project_management.group_project_member')), (4, ref('project_management.group_project_pm'))]" />
+  <!-- Dev -->
+  <record id="rule_project_dev" model="ir.rule">
+    <field name="name">Project: Dev can see assigned projects</field>
+    <field name="model_id" ref="project_management.model_pr_project" />
+    <field name="domain_force">[( 'dev_ids.user_id', 'in', [user.id] )]</field>
+    <field name="groups" eval="[(4, ref('project_management.group_project_member'))]" />
   </record>
 
-  <!-- Task -->
-  <record id="task_rule" model="ir.rule">
-    <field name="name">Task Access for Project Members</field>
-    <field name="model_id" ref="model_pr_task" />
-    <field name="domain_force">
-      ['|','|',('project_id.pm_id','=',user.id),('project_id.dev_ids','=',user.id),('project_id.qc_ids','=',user.id)]</field>
-    <field name="groups"
-      eval="[(4, ref('project_management.group_project_member')), (4, ref('project_management.group_project_pm'))]" />
+  <!-- QC -->
+  <record id="rule_project_qc" model="ir.rule">
+    <field name="name">Project: QC can see assigned projects</field>
+    <field name="model_id" ref="project_management.model_pr_project" />
+    <field name="domain_force">[( 'qc_ids.user_id', 'in', [user.id] )]</field>
+    <field name="groups" eval="[(4, ref('project_management.group_project_member'))]" />
   </record>
 
-  <!-- Request -->
+  <!-- ==================== SPRINT ==================== -->
+  <!-- PM -->
+  <record id="rule_sprint_pm" model="ir.rule">
+    <field name="name">Sprint: PM can see their project sprints</field>
+    <field name="model_id" ref="project_management.model_pr_sprint"/>
+    <field name="domain_force">[('project_id.pm_id.user_id', '=', user.id)]</field>
+    <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]"/>
+  </record>
+
+  <!-- Dev -->
+  <record id="rule_sprint_dev" model="ir.rule">
+    <field name="name">Sprint: Dev Read Access</field>
+    <field name="model_id" ref="project_management.model_pr_sprint"/>
+    <field name="domain_force">[('project_id.dev_ids.user_id', 'in', [user.id])]</field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+    <field name="groups" eval="[(4, ref('project_management.group_project_member'))]"/>
+  </record>
+
+  <!-- QC -->
+  <record id="rule_sprint_qc" model="ir.rule">
+    <field name="name">Sprint: QC Read Access</field>
+    <field name="model_id" ref="project_management.model_pr_sprint"/>
+    <field name="domain_force">[('project_id.qc_ids.user_id', 'in', [user.id])]</field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+    <field name="groups" eval="[(4, ref('project_management.group_project_member'))]"/>
+  </record>
+
+  <!-- ==================== TASK ==================== -->
+  <!-- PM -->
+  <record id="rule_task_pm" model="ir.rule">
+    <field name="name">Task: PM can see their project tasks</field>
+    <field name="model_id" ref="project_management.model_pr_task"/>
+    <field name="domain_force">[('project_id.pm_id.user_id', '=', user.id)]</field>
+    <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]"/>
+  </record>
+
+  <!-- Dev -->
+  <record id="rule_task_dev" model="ir.rule">
+    <field name="name">Task: Dev Read Access</field>
+    <field name="model_id" ref="project_management.model_pr_task"/>
+    <field name="domain_force">[('project_id.dev_ids.user_id', 'in', [user.id])]</field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+    <field name="groups" eval="[(4, ref('project_management.group_project_member'))]"/>
+  </record>
+
+  <!-- QC -->
+  <record id="rule_task_qc" model="ir.rule">
+    <field name="name">Task: QC Read Access</field>
+    <field name="model_id" ref="project_management.model_pr_task"/>
+    <field name="domain_force">[('project_id.qc_ids.user_id', 'in', [user.id])]</field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="False"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+    <field name="groups" eval="[(4, ref('project_management.group_project_member'))]"/>
+  </record>
+
+  <!-- ==================== REQUEST ==================== -->
   <record id="open_request_rule_pm" model="ir.rule">
     <field name="name">Open Project Request for PM</field>
     <field name="model_id" ref="model_pr_open_request" />
@@ -49,5 +103,29 @@
     <field name="model_id" ref="model_pr_close_request" />
     <field name="domain_force">[('project_id.pm_id','=',user.id)]</field>
     <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]" />
+  </record>
+
+  <!-- ==================== PROJECT OPEN REQUEST ==================== -->
+  <record id="rule_pm_open_own_requests" model="ir.rule">
+    <field name="name">PM - Open Own Requests</field>
+    <field name="model_id" ref="model_pr_open_request"/>
+    <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]"/>
+    <field name="domain_force">[('pm_id.user_id.id', '=', user.id)]</field>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_unlink" eval="0"/>
+  </record>
+
+  <!-- ==================== PROJECT CLOSE REQUEST ==================== -->
+  <record id="rule_pm_close_own_project_requests" model="ir.rule">
+    <field name="name">PM - Close Requests for Own Projects</field>
+    <field name="model_id" ref="model_pr_close_request"/>
+    <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]"/>
+    <field name="domain_force">[('project_id.pm_id.user_id.id', '=', user.id)]</field>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_unlink" eval="0"/>
   </record>
 </odoo>

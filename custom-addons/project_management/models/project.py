@@ -5,7 +5,7 @@ class Project(models.Model):
     _name = 'pr.project'
     _description = 'Project Management'
 
-    name = fields.Char(string='Name', required=True, unique=True)
+    name = fields.Char(string='Name', required=True)
     code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date')
@@ -19,6 +19,7 @@ class Project(models.Model):
     description = fields.Text(string='Description')
     task_ids = fields.One2many('pr.task', 'project_id', string="Tasks")
     task_count = fields.Integer(string="Task Count", compute="_compute_task_count")
+    request_id = fields.Many2one('pr.open.request', string='Open Request')
 
     @api.model
     def create(self, vals):

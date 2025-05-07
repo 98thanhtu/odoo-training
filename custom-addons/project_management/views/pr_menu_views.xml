@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
   <menuitem id="menu_pr_root" name="Project Management" sequence="1" />
 
   <menuitem id="pr_menu_projects"
@@ -34,31 +33,31 @@
     sequence="30" />
 
   <menuitem id="menu_project_report_root"
-    parent="menu_pr_root"
     name="Report"
-    groups="group_project_pm,group_project_admin"
-    sequence="90" />
+    parent="menu_pr_root"
+    sequence="90"
+    groups="group_project_pm,group_project_admin" />
 
   <menuitem id="menu_project_report_deadline"
-    name="Report Deadline Urgent"
+    name="Deadline Urgent Tasks"
     parent="menu_project_report_root"
     action="action_task_report_deadline_urgent"
     sequence="10"
     groups="group_project_pm,group_project_admin" />
 
-  <!-- <menuitem id="menu_project_report_sprint"
-    name="Report Task In Sprint"
+  <!-- <menuitem id="menu_project_report_task_in_sprint"
+    name="Task In Sprint"
     parent="menu_project_report_root"
-    action="action_task_sprint_report"
+    action="action_task_in_sprint_report"
     sequence="20"
     groups="group_project_pm,group_project_admin" /> -->
 
-  <menuitem id="menu_project_config_root" name="Config" parent="menu_pr_root" sequence="40"
+  <!-- <menuitem id="menu_project_config_root" name="Config" parent="menu_pr_root" sequence="40"
     groups="group_project_pm,group_project_admin" />
 
-  <!-- <menuitem id="menu_pr_task_type" name="Task Type" parent="menu_project_config_root"
-    action="pr_task_type_action" sequence="10" /> -->
-
   <menuitem id="menu_pr_member" name="Member" parent="menu_project_config_root"
-    action="pr_member_action" sequence="20" groups="group_project_pm,group_project_admin" />
+    action="pr_member_action" sequence="20" groups="group_project_pm,group_project_admin" /> -->
+
+  <!-- <menuitem id="menu_pr_task_type" name="Task Type" parent="menu_project_config_root"
+      action="pr_task_type_action" sequence="10" /> -->
 </odoo>

@@ -1,4 +1,6 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
 
 class ProjectOpenRequest(models.Model):
     _name = 'pr.open.request'
@@ -24,7 +26,7 @@ class ProjectOpenRequest(models.Model):
     def approve_request(self):
         for record in self:
             if record.status != 'submitted':
-                raise ValueError("Only submitted requests can be approved.")
+                raise ValidationError("Only submitted requests can be approved.")
 
             project = self.env['pr.project'].create({
                 'name': record.project_name,
@@ -38,6 +40,36 @@ class ProjectOpenRequest(models.Model):
 
             record.status = 'approved'
             record.project_id = project.id
+
+            if record.create_uid and record.create_uid.email:
+                template_subject = _("Phiếu yêu cầu tạo dự án: %s đã được duyệt") % record.code
+                template_body = _("""
+                Chào %s,
+
+                Phiếu yêu cầu mở dự án của bạn đã được duyệt. Vui lòng liên hệ với các thành viên trong dự án để thông báo thông tin đến họ.
+
+                Trân trọng,
+                """) % record.create_uid.name
+
+                mail_values = {
+                    'subject': template_subject,
+                    'body_html': f"<pre>{template_body}</pre>",
+                    'email_to': record.create_uid.email,
+                    'auto_delete': True,
+                }
+                self.env['mail.mail'].create(mail_values).send()
+
+    def submit_request(self):
+        for record in self:
+            if record.status != 'draft':
+                raise ValidationError("Only drafts are sent for approval")
+            record.status = 'submitted'
+
+    def cancel_request(self):
+        for record in self:
+            if record.status not in ('draft', 'submitted'):
+                raise ValidationError("Only draft or submitted request can be canceled")
+            record.status = 'cancelled'
 
     @api.constrains('start_date', 'end_date')
     def _check_dates(self):

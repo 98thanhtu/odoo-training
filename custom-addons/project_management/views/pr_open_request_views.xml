@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-  <!-- Form View -->
   <record id="view_pr_open_request_form" model="ir.ui.view">
     <field name="name">pr.open.request.form</field>
     <field name="model">pr.open.request</field>
@@ -16,15 +14,31 @@
             <field name="start_date" />
             <field name="end_date" />
             <field name="description" />
-            <field name="status" readonly="1" create="false" />
-            <!-- <field name="project_id" readonly="1" create="false" /> -->
+            <field name="status" readonly="1" />
+            <field name="cancel_reason" invisible="status != 'cancelled'" />
+            <!-- <field name="project_id" readonly="1" /> -->
           </group>
-          <footer>
+
+          <group>
+            <button name="submit_request"
+              type="object"
+              string="Submit"
+              class="btn btn-primary"
+              invisible="status != 'draft'" />
+
             <button name="approve_request"
               type="object"
-              class="btn btn-primary"
-              string="Approve" />
-          </footer>
+              string="Approve"
+              class="btn btn-success"
+              groups="project_management.group_project_admin"
+              invisible="status != 'submitted'" />
+
+            <button name="cancel_request"
+              type="object"
+              string="Cancel"
+              class="btn btn-danger"
+              invisible="status not in ('draft', 'submitted')" />
+          </group>
         </sheet>
       </form>
     </field>
@@ -36,20 +50,16 @@
     <field name="arch" type="xml">
       <tree string="Project Opening Requests">
         <field name="code" />
-        <field name="project_id" />
         <field name="project_name" />
-        <field name="pm_id" domain="[('role', '=', 'pm')]" />
-        <field name="qc_ids" domain="[('role', '=', 'qc')]" />
-        <field name="dev_ids" domain="[('role', '=', 'dev')]" />
+        <field name="pm_id" />
         <field name="status" />
         <field name="start_date" />
         <field name="end_date" />
-        <field name="cancel_reason" />
+        <field name="project_id" />
       </tree>
     </field>
   </record>
 
-  <!-- Action -->
   <record id="action_pr_open_request" model="ir.actions.act_window">
     <field name="name">Open Project Requests</field>
     <field name="res_model">pr.open.request</field>
