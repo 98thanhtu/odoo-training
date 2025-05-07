@@ -19,8 +19,10 @@ access_pr_task_type_member,access.pr.task.type.member,model_pr_task_type,project
 access_pr_task_type_pm,access.pr.task.type.pm,model_pr_task_type,project_management.group_project_pm,1,1,1,0
 access_pr_task_type_admin,access.pr.task.type.admin,model_pr_task_type,project_management.group_project_admin,1,1,1,1
 
+access_project_open_request_member,access.project.open.request.member,model_pr_open_request,project_management.group_project_member,0,0,0,0
 access_project_open_request_pm,access.project.open.request.pm,model_pr_open_request,project_management.group_project_pm,1,0,1,0
 access_project_open_request_admin,access.project.open.request.admin,model_pr_open_request,project_management.group_project_admin,1,1,1,0
 
+access_project_close_request_member,access.project.close.request.member,model_pr_close_request,project_management.group_project_member,0,0,0,0
 access_project_close_request_pm,access.project.close.request.pm,model_pr_close_request,project_management.group_project_pm,1,0,1,0
 access_project_close_request_admin,access.project.close.request.admin,model_pr_close_request,project_management.group_project_admin,1,1,1,0

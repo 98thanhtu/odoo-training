@@ -5,24 +5,11 @@
     <field name="model">pr.project</field>
     <field name="arch" type="xml">
       <kanban>
-        <div class="oe_button_box" name="button_box">
-          <button class="oe_stat_button" icon="fa-refresh" type="object" name="action_update_newest_sprint">
-            <field name="name" string="Update Sprint" widget="statinfo" />
-          </button>
-        </div>
         <field name="code" />
         <field name="name" />
         <field name="state" />
         <field name="task_count" />
         <templates>
-          <t t-name="kanban-header">
-            <div class="oe_kanban_buttons">
-              <button type="object"
-                name="action_update_newest_sprint"
-                string="Update Newest Sprint"
-                class="btn btn-secondary" />
-            </div>
-          </t>
           <t t-name="kanban-box">
             <div class="o_kanban_content position-relative">
               <div class="position-absolute top-0 end-0 p-2">

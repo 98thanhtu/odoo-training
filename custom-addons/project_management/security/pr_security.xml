@@ -122,7 +122,7 @@
     <field name="name">PM - Close Requests for Own Projects</field>
     <field name="model_id" ref="model_pr_close_request"/>
     <field name="groups" eval="[(4, ref('project_management.group_project_pm'))]"/>
-    <field name="domain_force">[('project_id.pm_id.user_id.id', '=', user.id)]</field>
+    <field name="domain_force">[('pm_id.user_id.id', '=', user.id)]</field>
     <field name="perm_read" eval="1"/>
     <field name="perm_create" eval="1"/>
     <field name="perm_write" eval="0"/>

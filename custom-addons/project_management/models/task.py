@@ -44,15 +44,29 @@ class Task(models.Model):
         return record
 
     @api.model
-    def update_newest_sprint(self):
-        for task in self:
-            newest_sprint = self.env['pr.sprint'].search([
-                ('project_id', '=', task.project_id.id),
-                ('state', '=', 'open')
-            ], order="create_date desc", limit=1)
+    def action_update_newest_sprint(self):
+        project_id = self.env.context.get('default_project_id')
+        if not project_id:
+            raise ValidationError("Project not found.")
 
-            if newest_sprint:
-                task.sprint_id = newest_sprint.id
+        # get newest open
+        newest_sprint = self.env['pr.sprint'].search([
+            ('project_id', '=', project_id),
+            ('status', '=', 'open')
+        ], order='create_date desc', limit=1)
+
+        if not newest_sprint:
+            raise ValidationError("Sprint not found")
+
+        tasks = self.env['pr.task'].search([
+            ('project_id', '=', project_id),
+            ('sprint_id.status', '=', 'closed'),
+            ('status', '!=', 'done')
+        ])
+
+        for task in tasks:
+            task.sprint_id = newest_sprint.id
+
 
     @api.constrains('dev_id', 'dev_deadline', 'qc_id', 'qc_deadline')
     def _check_required_deadlines(self):

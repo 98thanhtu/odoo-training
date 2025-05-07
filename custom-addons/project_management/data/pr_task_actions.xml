@@ -1,0 +1,10 @@
+<odoo>
+  <record id="action_update_newest_sprint" model="ir.actions.server">
+    <field name="name">Update Newest Sprint</field>
+    <field name="model_id" ref="model_pr_task" />
+    <field name="state">code</field>
+    <field name="code">
+      action = env['pr.task'].browse(record_ids).action_update_newest_sprint()
+    </field>
+  </record>
+</odoo>

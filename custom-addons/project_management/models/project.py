@@ -74,26 +74,6 @@ class Project(models.Model):
             if existing_project:
                 raise ValidationError("Project Name must be unique.")
 
-    def action_update_newest_sprint(self):
-        Sprint = self.env['pr.sprint']
-        Task = self.env['pr.task']
-        for project in self:
-            open_sprint = Sprint.search([
-                ('project_id', '=', project.id),
-                ('state', '=', 'open')
-            ], limit=1, order='start_date desc')
-
-            if not open_sprint:
-                continue
-
-            old_sprint_tasks = Task.search([
-                ('project_id', '=', project.id),
-                ('sprint_id.state', '=', 'close'),
-                ('state', '!=', 'done')
-            ])
-
-            old_sprint_tasks.write({'sprint_id': open_sprint.id})
-
     def weekly_report(self):
         print(self)
         print('=================== Test Schedule ===================')
