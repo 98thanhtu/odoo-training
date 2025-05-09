@@ -9,7 +9,7 @@
         <sheet>
           <group>
             <field name="code" />
-            <field name="pm_id" domain="[('role', '=', 'pm')]" />
+            <field name="pm_id"  domain="[('role', '=', 'pm')]" groups="project_management.group_project_admin" />
             <field name="project_id" />
             <field name="end_date" />
             <field name="close_reason" />
@@ -26,6 +26,10 @@
     <field name="model">pr.close.request</field>
     <field name="arch" type="xml">
       <tree string="Project Close Requests">
+        <header>
+          <button name="action_approve_all_close_requests" type="object" string="Approve All" class="btn-primary"/>
+          <button name="action_refuse_all_close_requests" type="object" string="Refuse All" class="btn-secondary" />
+        </header>
         <field name="code" />
         <field name="pm_id" domain="[('role', '=', 'pm')]" />
         <field name="end_date" />

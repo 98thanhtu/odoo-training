@@ -8,7 +8,7 @@
           <group>
             <field name="code" />
             <field name="project_name" />
-            <field name="pm_id" domain="[('role', '=', 'pm')]" />
+            <field name="pm_id"  domain="[('role', '=', 'pm')]" groups="project_management.group_project_admin" />
             <field name="qc_ids" domain="[('role', '=', 'qc')]" widget="many2many_tags" />
             <field name="dev_ids" domain="[('role', '=', 'dev')]" widget="many2many_tags" />
             <field name="start_date" />
@@ -49,6 +49,10 @@
     <field name="model">pr.open.request</field>
     <field name="arch" type="xml">
       <tree string="Project Opening Requests">
+        <header>
+          <button name="action_approve_all_open_requests" type="object" string="Approve All" class="btn-primary"/>
+          <button name="action_refuse_all_open_requests" type="object" string="Refuse All" class="btn-secondary" />
+        </header>
         <field name="code" />
         <field name="project_name" />
         <field name="pm_id" />

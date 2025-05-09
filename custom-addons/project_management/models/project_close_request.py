@@ -4,7 +4,7 @@ class ProjectCloseRequest(models.Model):
     _name = 'pr.close.request'
     _description = 'Project Closing Request'
 
-    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='')
+    code = fields.Char(string="Code", required=True, copy=False, readonly=True, default='New')
     project_id = fields.Many2one('pr.project', string="Project", required=True)
     pm_id = fields.Many2one('pr.member', string="Project Manager", required=True)
     end_date = fields.Date(string="End Date", required=True)
@@ -37,3 +37,9 @@ class ProjectCloseRequest(models.Model):
             unfinished_tasks = tasks.filtered(lambda t: t.state != 'done')
             if unfinished_tasks:
                 raise ValidationError("Cannot create project close request because there are unfinished tasks.")
+
+    def action_approve_all_close_requests(self):
+        print(self)
+
+    def action_refuse_all_close_requests(self):
+        print(self)

@@ -71,11 +71,40 @@ class ProjectOpenRequest(models.Model):
                 raise ValidationError("Only draft or submitted request can be canceled")
             record.status = 'cancelled'
 
+    def action_approve_all_open_requests(self):
+        requests = self.env['pr.open.request'].search([('status', '=', 'submitted')])
+        for req in requests:
+            req.approve_request()
+        return True
+
+    def action_refuse_all_open_requests(self):
+        requests = self.search([('status', '=', 'submitted')])
+        for req in requests:
+            req.cancel_request()
+        return True
+
     @api.constrains('start_date', 'end_date')
     def _check_dates(self):
         for pr in self:
             if pr.end_date and pr.end_date < pr.start_date:
                 raise ValidationError('End Date must be greater than Start Date!')
+
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
+        member = self.env['pr.member'].search([('user_id', '=', self.env.uid)], limit=1)
+        if member and member.role == 'pm':
+            res['pm_id'] = member.id
+        return res
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        res = super().fields_view_get(view_id, view_type, toolbar, submenu)
+        member = self.env['pr.member'].search([('user_id', '=', self.env.uid)], limit=1)
+        is_pm_user = member and member.role == 'pm'
+        res['context'] = res.get('context', {})
+        res['context'].update({'is_pm_user': is_pm_user})
+        return res
 
     @api.model
     def create(self, vals):
