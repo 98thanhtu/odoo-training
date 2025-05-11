@@ -1,0 +1,22 @@
+<odoo>
+  <record id="module_category_project_management" model="ir.module.category">
+    <field name="name">Project Management</field>
+    <field name="description">Project Management</field>
+    <field name="sequence">10</field>
+  </record>
+
+  <record id="group_project_member" model="res.groups">
+    <field name="name">Member</field>
+    <field name="category_id" ref="project_management.module_category_project_management" />
+  </record>
+
+  <record id="group_project_pm" model="res.groups">
+    <field name="name">PM</field>
+    <field name="category_id" ref="project_management.module_category_project_management" />
+  </record>
+
+  <record id="group_project_admin" model="res.groups">
+    <field name="name">Admin</field>
+    <field name="category_id" ref="project_management.module_category_project_management" />
+  </record>
+</odoo>

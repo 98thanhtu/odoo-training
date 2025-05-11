@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Form View -->
+  <record id="view_pr_close_request_form" model="ir.ui.view">
+    <field name="name">pr.close.request.form</field>
+    <field name="model">pr.close.request</field>
+    <field name="arch" type="xml">
+      <form string="Project Close Request">
+        <sheet>
+          <group>
+            <field name="code" />
+            <field name="pm_id"  domain="[('role', '=', 'pm')]" groups="project_management.group_project_admin" />
+            <field name="project_id" />
+            <field name="end_date" />
+            <field name="close_reason" />
+            <field name="status" readonly="1" />
+            <!-- <field name="cancel_reason" /> -->
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_pr_close_request_tree" model="ir.ui.view">
+    <field name="name">pr.close.request.tree</field>
+    <field name="model">pr.close.request</field>
+    <field name="arch" type="xml">
+      <tree string="Project Close Requests">
+        <header>
+          <button name="action_approve_all_close_requests" type="object" string="Approve All" class="btn-primary"/>
+          <button name="action_refuse_all_close_requests" type="object" string="Refuse All" class="btn-secondary" />
+        </header>
+        <field name="code" />
+        <field name="pm_id" domain="[('role', '=', 'pm')]" />
+        <field name="end_date" />
+        <field name="close_reason" />
+        <field name="project_id" />
+        <field name="status" readonly="1" />
+        <field name="cancel_reason" />
+      </tree>
+    </field>
+  </record>
+
+  <!-- Action -->
+  <record id="action_pr_close_request" model="ir.actions.act_window">
+    <field name="name">Close Project Requests</field>
+    <field name="res_model">pr.close.request</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+</odoo>

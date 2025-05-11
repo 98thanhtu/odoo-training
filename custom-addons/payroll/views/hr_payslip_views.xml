@@ -1,0 +1,53 @@
+<odoo>
+  <record id="view_payslip_tree" model="ir.ui.view">
+    <field name="name">payroll.payslip.tree</field>
+    <field name="model">payroll.payslip</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="employee_id" />
+        <field name="month" />
+        <field name="year" />
+        <field name="total_salary" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_payslip_form" model="ir.ui.view">
+    <field name="name">payroll.payslip.form</field>
+    <field name="model">payroll.payslip</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="employee_id" />
+            <field name="working_days" />
+            <field name="month" />
+            <field name="year" />
+            <field name="standard_working_days" />
+            <field name="total_salary" readonly="1" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_payroll_payslip_search" model="ir.ui.view">
+    <field name="name">payroll.payslip.search</field>
+    <field name="model">payroll.payslip</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="employee_id" />
+        <filter name="group_by_employee" string="Employee" context="{'group_by': 'employee_id'}" />
+        <filter name="group_by_month" string="Month" context="{'group_by': 'month'}" />
+      </search>
+    </field>
+  </record>
+
+  <record id="action_payslip" model="ir.actions.act_window">
+    <field name="name">Payslip</field>
+    <field name="res_model">payroll.payslip</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="menu_payslip" name="Payslips" parent="menu_hr_root" action="action_payslip" />
+</odoo>

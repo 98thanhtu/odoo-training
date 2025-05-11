@@ -25,12 +25,9 @@ Long description of module's purpose
         'views/student_views.xml',
         'security/student_security.xml',
         'security/ir.model.access.csv',
-        'views/hr_payroll_menu.xml',
-        'views/hr_payslip_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         # 'demo/demo.xml',
     ],
 }
-

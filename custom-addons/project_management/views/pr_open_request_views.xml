@@ -1,0 +1,72 @@
+<odoo>
+  <record id="view_pr_open_request_form" model="ir.ui.view">
+    <field name="name">pr.open.request.form</field>
+    <field name="model">pr.open.request</field>
+    <field name="arch" type="xml">
+      <form string="Project Opening Request">
+        <sheet>
+          <group>
+            <field name="code" />
+            <field name="project_name" />
+            <field name="pm_id"  domain="[('role', '=', 'pm')]" groups="project_management.group_project_admin" />
+            <field name="qc_ids" domain="[('role', '=', 'qc')]" widget="many2many_tags" />
+            <field name="dev_ids" domain="[('role', '=', 'dev')]" widget="many2many_tags" />
+            <field name="start_date" />
+            <field name="end_date" />
+            <field name="description" />
+            <field name="status" readonly="1" />
+            <field name="cancel_reason" invisible="status != 'cancelled'" />
+            <!-- <field name="project_id" readonly="1" /> -->
+          </group>
+
+          <group>
+            <button name="submit_request"
+              type="object"
+              string="Submit"
+              class="btn btn-primary"
+              invisible="status != 'draft'" />
+
+            <button name="approve_request"
+              type="object"
+              string="Approve"
+              class="btn btn-success"
+              groups="project_management.group_project_admin"
+              invisible="status != 'submitted'" />
+
+            <button name="cancel_request"
+              type="object"
+              string="Cancel"
+              class="btn btn-danger"
+              invisible="status not in ('draft', 'submitted')" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_pr_open_request_tree" model="ir.ui.view">
+    <field name="name">pr.open.request.tree</field>
+    <field name="model">pr.open.request</field>
+    <field name="arch" type="xml">
+      <tree string="Project Opening Requests">
+        <header>
+          <button name="action_approve_all_open_requests" type="object" string="Approve All" class="btn-primary"/>
+          <button name="action_refuse_all_open_requests" type="object" string="Refuse All" class="btn-secondary" />
+        </header>
+        <field name="code" />
+        <field name="project_name" />
+        <field name="pm_id" />
+        <field name="status" />
+        <field name="start_date" />
+        <field name="end_date" />
+        <field name="project_id" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="action_pr_open_request" model="ir.actions.act_window">
+    <field name="name">Open Project Requests</field>
+    <field name="res_model">pr.open.request</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+</odoo>

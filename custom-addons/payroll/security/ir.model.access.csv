@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_manager,payroll.manager,model_payroll_employee,group_hr_manager,1,1,1,1
+access_hr_contract_manager,payroll.manager,model_payroll_contract,group_hr_manager,1,1,1,1
+access_hr_payslip_manager,payroll.manager,model_payroll_payslip,group_hr_manager,1,1,1,1
+access_hr_attendance_manager,payroll.manager,model_payroll_attendance,group_hr_manager,1,1,1,1
+
+access_hr_employee,payroll.employee,model_payroll_employee,group_employee,1,0,0,0
+access_hr_contract_employee,payroll.employee,model_payroll_contract,group_employee,1,0,0,0
+access_hr_payslip_employee,payroll.employee,model_payroll_payslip,group_employee,1,0,0,0
+access_hr_attendance_employee,payroll.employee,model_payroll_attendance,group_employee,1,0,1,0

@@ -1,0 +1,62 @@
+msgid "Project"
+msgstr "Dự án"
+
+msgid "Tên dự án"
+msgstr "Project Name"
+
+msgid "Ngày bắt đầu"
+msgstr "Start Date"
+
+msgid "Ngày kết thúc"
+msgstr "End Date"
+
+msgid "Trạng thái"
+msgstr "State"
+
+msgid "Nháp"
+msgstr "Draft"
+
+msgid "Gửi duyệt"
+msgstr "Submitted"
+
+msgid "Duyệt"
+msgstr "Approved"
+
+msgid "Huỷ"
+msgstr "Cancelled"
+
+msgid "Mô tả"
+msgstr "Description"
+
+msgid "PM"
+msgstr "Project Manager"
+
+msgid "Developers"
+msgstr "Developers"
+
+msgid "QC"
+msgstr "Quality Control"
+
+msgid "Loại Task"
+msgstr "Task Type"
+
+msgid "Chưa bắt đầu"
+msgstr "To Do"
+
+msgid "Đang thực hiện"
+msgstr "In Progress"
+
+msgid "Hoàn thành"
+msgstr "Done"
+
+msgid "Yêu cầu mở dự án"
+msgstr "Project Opening Request"
+
+msgid "Yêu cầu đóng dự án"
+msgstr "Project Closing Request"
+
+msgid "Lý do huỷ"
+msgstr "Cancel Reason"
+
+msgid "Lý do đóng dự án"
+msgstr "Closing Reason"
