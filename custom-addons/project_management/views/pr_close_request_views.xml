@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-  <!-- Form View -->
   <record id="view_pr_close_request_form" model="ir.ui.view">
     <field name="name">pr.close.request.form</field>
     <field name="model">pr.close.request</field>
@@ -8,14 +6,35 @@
       <form string="Project Close Request">
         <sheet>
           <group>
-            <field name="code" />
-            <field name="pm_id"  domain="[('role', '=', 'pm')]" groups="project_management.group_project_admin" />
-            <field name="project_id" />
-            <field name="end_date" />
+            <field name="code" readonly="1" />
+            <field name="project_id" required="1" />
+            <field name="pm_id" groups="project_management.group_project_admin" readonly="1" />
+            <field name="end_date" required="1" />
             <field name="close_reason" />
             <field name="status" readonly="1" />
-            <!-- <field name="cancel_reason" /> -->
+            <field name="cancel_reason" invisible="status != 'cancelled'" />
           </group>
+
+          <footer>
+            <button name="submit_request"
+              type="object"
+              string="Submit"
+              class="btn-primary"
+              invisible="status != 'draft'" />
+
+            <button name="approve_request"
+              type="object"
+              string="Approve"
+              class="btn-success"
+              groups="project_management.group_project_admin"
+              invisible="status != 'submitted'" />
+
+            <button name="cancel_request"
+              type="object"
+              string="Cancel"
+              class="btn-danger"
+              invisible="status not in ('draft', 'submitted')" />
+          </footer>
         </sheet>
       </form>
     </field>
@@ -26,25 +45,23 @@
     <field name="model">pr.close.request</field>
     <field name="arch" type="xml">
       <tree string="Project Close Requests">
-        <header>
-          <button name="action_approve_all_close_requests" type="object" string="Approve All" class="btn-primary"/>
-          <button name="action_refuse_all_close_requests" type="object" string="Refuse All" class="btn-secondary" />
-        </header>
         <field name="code" />
-        <field name="pm_id" domain="[('role', '=', 'pm')]" />
-        <field name="end_date" />
-        <field name="close_reason" />
         <field name="project_id" />
-        <field name="status" readonly="1" />
-        <field name="cancel_reason" />
+        <field name="pm_id" />
+        <field name="status" />
+        <field name="end_date" />
       </tree>
     </field>
   </record>
 
-  <!-- Action -->
   <record id="action_pr_close_request" model="ir.actions.act_window">
-    <field name="name">Close Project Requests</field>
+    <field name="name">Project Close Requests</field>
     <field name="res_model">pr.close.request</field>
     <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Close Project
+      </p>
+    </field>
   </record>
 </odoo>
