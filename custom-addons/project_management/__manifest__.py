@@ -31,13 +31,21 @@ Long description of module's purpose
         'views/pr_task_type_views.xml',
         'views/pr_sprint_views.xml',
         'views/pr_menu_views.xml',
-        'views/pr_task_report_sprint.xml',
-        'views/pr_task_report_urgent.xml',
+        'views/pr_report_views.xml',
         'security/project_groups.xml',
         'security/pr_security.xml',
         'security/ir.model.access.csv',
         'data/ir_cron_job_weekly_report.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            # 'project_management/static/src/js/month_year_widget.js',
+            # 'project_management/static/src/xml/month_year_widget.xml',
+            # 'web/static/lib/bootstrap-datepicker/js/bootstrap-datepicker.js',
+            # 'web/static/lib/bootstrap-datepicker/css/bootstrap-datepicker.css',
+            # 'project_management/static/src/css/clickable_integer.scss'
+        ],
+    },
     # only loaded in demonstration mode
     'installable': True,
     'application': True,

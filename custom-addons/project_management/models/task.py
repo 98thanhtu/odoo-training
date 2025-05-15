@@ -14,7 +14,6 @@ class Task(models.Model):
         string="Developer",
         domain="[('id', 'in', project_id.dev_ids)]"
     )
-
     qc_id = fields.Many2one(
         'pr.member',
         string="QC",
@@ -43,30 +42,43 @@ class Task(models.Model):
         record.code = f"T{record.id:05d}"
         return record
 
-    @api.model
     def action_update_newest_sprint(self):
         project_id = self.env.context.get('default_project_id')
         if not project_id:
-            raise ValidationError("Project not found.")
+            raise ValidationError("No project specified in the context.")
 
-        # get newest open
+        # Find the newest open sprint
         newest_sprint = self.env['pr.sprint'].search([
             ('project_id', '=', project_id),
             ('status', '=', 'open')
         ], order='create_date desc', limit=1)
 
         if not newest_sprint:
-            raise ValidationError("Sprint not found")
+            raise ValidationError("No open sprint found for this project.")
 
+        # Find tasks from closed sprints with status != done
         tasks = self.env['pr.task'].search([
             ('project_id', '=', project_id),
             ('sprint_id.status', '=', 'closed'),
             ('status', '!=', 'done')
         ])
 
-        for task in tasks:
-            task.sprint_id = newest_sprint.id
+        if not tasks:
+            raise ValidationError("No tasks to update to the newest sprint.")
 
+        # Update tasks to the newest sprint
+        tasks.write({'sprint_id': newest_sprint.id})
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Success',
+                'message': f'Updated {len(tasks)} tasks to sprint {newest_sprint.name}.',
+                'type': 'success',
+                'sticky': False,
+            }
+        }
 
     @api.constrains('dev_id', 'dev_deadline', 'qc_id', 'qc_deadline')
     def _check_required_deadlines(self):

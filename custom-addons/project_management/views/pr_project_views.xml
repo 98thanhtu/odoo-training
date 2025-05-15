@@ -60,7 +60,6 @@
     </field>
   </record>
 
-
   <record id="action_pr_project" model="ir.actions.act_window">
     <field name="name">Projects</field>
     <field name="res_model">pr.project</field>

@@ -1,0 +1,5 @@
+<templates>
+  <t t-name="MonthYearWidget">
+    <input type="text" class="o_input" readonly="readonly" />
+  </t>
+</templates>
