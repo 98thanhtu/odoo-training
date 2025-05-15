@@ -29,7 +29,7 @@
     </field>
   </record>
 
-  <record id="action_pr_task_type" model="ir.actions.act_window">
+  <record id="pr_task_type_action" model="ir.actions.act_window">
     <field name="name">Task Type</field>
     <field name="res_model">pr.task.type</field>
     <field name="view_mode">tree,form</field>

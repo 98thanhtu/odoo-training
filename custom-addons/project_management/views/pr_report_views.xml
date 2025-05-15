@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Report Deadline Urgent Tree View -->
+  <record id="view_report_deadline_urgent_tree" model="ir.ui.view">
+    <field name="name">report.deadline.urgent.tree</field>
+    <field name="model">report.deadline.urgent</field>
+    <field name="arch" type="xml">
+      <tree string="Deadline Urgent Report">
+        <field name="code" />
+        <field name="name" />
+        <field name="project_id" />
+        <field name="member_id" />
+        <field name="deadline" />
+        <field name="status" />
+      </tree>
+    </field>
+  </record>
+
+  <!-- Report Deadline Urgent Action -->
+  <record id="action_report_deadline_urgent" model="ir.actions.act_window">
+    <field name="name">Deadline Urgent Report</field>
+    <field name="res_model">report.deadline.urgent</field>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_report_deadline_urgent_tree" />
+  </record>
+
+  <!-- Report Task in Sprint Wizard Form View -->
+  <record id="view_report_task_sprint_wizard_form" model="ir.ui.view">
+    <field name="name">report.task.sprint.wizard.form</field>
+    <field name="model">report.task.sprint.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Task in Sprint Report">
+        <group>
+          <field name="date_from" widget="month_year" />
+          <field name="date_to" widget="month_year" />
+          <field name="project_ids" widget="many2many_tags" />
+        </group>
+        <footer>
+          <button name="action_generate_report" string="Generate Report" type="object"
+            class="oe_highlight" />
+          <button string="Cancel" class="oe_link" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <!-- Report Task in Sprint Wizard Action -->
+  <record id="action_report_task_sprint_wizard" model="ir.actions.act_window">
+    <field name="name">Task in Sprint Report</field>
+    <field name="res_model">report.task.sprint.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_report_task_sprint_wizard_form" />
+    <field name="target">new</field>
+  </record>
+
+  <record id="view_report_task_sprint_tree" model="ir.ui.view">
+    <field name="name">report.task.sprint.tree</field>
+    <field name="model">report.task.sprint</field>
+    <field name="arch" type="xml">
+      <tree string="Task in Sprint Report">
+        <field name="member_id" />
+        <field name="project_id" />
+        <field name="sprint_id" />
+        <field name="role" />
+        <field name="total_task" />
+        <button name="show_all_tasks" type="object" string="View" icon="fa-eye" />
+        <field name="new_task" />
+        <button name="show_new_tasks" type="object" string="View" icon="fa-eye" />
+        <field name="dev_task" />
+        <button name="show_dev_tasks" type="object" string="View" icon="fa-eye" />
+        <field name="qc_task" />
+        <button name="show_qc_tasks" type="object" string="View" icon="fa-eye" />
+        <field name="done_task" />
+        <button name="show_done_tasks" type="object" string="View" icon="fa-eye" />
+      </tree>
+    </field>
+  </record>
+
+  <!-- Report Task in Sprint Action -->
+  <record id="action_report_task_sprint" model="ir.actions.act_window">
+    <field name="name">Task in Sprint Report</field>
+    <field name="res_model">report.task.sprint</field>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_report_task_sprint_tree" />
+  </record>
+
+  <!-- Menu Items -->
+  <menuitem id="menu_project_management_reports"
+    name="Reports"
+    parent="menu_pr_root"
+    sequence="20" />
+
+  <menuitem id="menu_report_deadline_urgent"
+    name="Deadline Urgent"
+    parent="menu_project_management_reports"
+    action="action_report_deadline_urgent"
+    groups="group_project_pm,group_project_admin"
+    sequence="10" />
+
+  <menuitem id="menu_report_task_sprint"
+    name="Task in Sprint"
+    parent="menu_project_management_reports"
+    action="action_report_task_sprint_wizard"
+    groups="group_project_pm,group_project_admin"
+    sequence="20" />
+</odoo>

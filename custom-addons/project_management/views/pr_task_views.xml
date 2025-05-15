@@ -4,10 +4,14 @@
     <field name="name">pr.task.kanban</field>
     <field name="model">pr.task</field>
     <field name="arch" type="xml">
-      <kanban>
+      <kanban default_group_by="status">
         <field name="name" />
         <field name="status" />
         <field name="code" />
+        <control>
+          <button string="Create" type="object" name="create" class="oe_highlight"/>
+          <button string="Update Newest Sprint" type="object" name="action_update_newest_sprint" />
+        </control>
         <templates>
           <t t-name="kanban-box">
             <div class="oe_kanban_global_click">

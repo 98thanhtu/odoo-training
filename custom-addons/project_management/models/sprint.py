@@ -22,29 +22,24 @@ class Sprint(models.Model):
         record.code = f"SPR{record.id:05d}"
         return record
 
-    @api.constrains('start_date', 'end_date', 'project_id')
-    def _check_sprint_constraints(self):
-        for sprint in self:
-            if sprint.end_date and sprint.end_date < sprint.start_date:
-                raise ValidationError('End Date must be greater than Start Date!')
+    @api.constrains('project_id')
+    def _check_project_closed(self):
+        for record in self:
+            project = record.project_id
 
-            overlapping_sprints = self.env['pr.sprint'].search([
-                ('project_id', '=', sprint.project_id.id),
-                ('id', '!=', sprint.id),
-                '|',
-                '&', ('start_date', '<=', sprint.start_date), ('end_date', '>=', sprint.start_date),
-                '&', ('start_date', '<=', sprint.end_date), ('end_date', '>=', sprint.end_date)
-            ])
-            if overlapping_sprints:
-                raise ValidationError('A project cannot have overlapping sprints!')
+            sprints = self.env['pr.sprint'].search([('project_id', '=', project.id)])
+            tasks = self.env['pr.task'].search([('project_id', '=', project.id)])
 
-            open_sprints = self.env['pr.sprint'].search_count([
-                ('project_id', '=', sprint.project_id.id),
-                ('status', '=', 'open'),
-                ('id', '!=', sprint.id)
-            ])
-            if sprint.status == 'open' and open_sprints > 0:
-                raise ValidationError('A project can only have one open sprint at a time!')
+            if sprints:
+                open_sprints = sprints.filtered(lambda s: s.state != 'close')
+                if open_sprints:
+                    raise ValidationError("Cannot create project close request because there are unclosed sprints.")
+
+            if tasks:
+                unfinished_tasks = tasks.filtered(lambda t: t.state != 'done')
+                if unfinished_tasks:
+                    raise ValidationError("Cannot create project close request because there are unfinished tasks.")
+
 
     def write(self, vals):
         if 'status' in vals and vals['status'] == 'open':
