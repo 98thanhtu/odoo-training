@@ -8,10 +8,13 @@
         <field name="name" />
         <field name="status" />
         <field name="code" />
-        <control>
-          <button string="Create" type="object" name="create" class="oe_highlight"/>
-          <button string="Update Newest Sprint" type="object" name="action_update_newest_sprint" />
-        </control>
+        <field name="project_id" invisible="context.get('default_project_id', False) == False" />
+        <header>
+          <button string="Update Newest Sprint"
+            type="object"
+            name="action_update_newest_sprint"
+            display="always" />
+        </header>
         <templates>
           <t t-name="kanban-box">
             <div class="oe_kanban_global_click">

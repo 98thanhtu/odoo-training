@@ -38,13 +38,20 @@ class Project(models.Model):
             record.state = 'closed'
 
     def open_tasks(self):
+        self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
             'name': 'Project Tasks',
             'res_model': 'pr.task',
-            'view_mode': 'kanban,form',
+            'view_mode': 'kanban,tree,form',
             'domain': [('project_id', '=', self.id)],
-            'context': {'default_project_id': self.id},
+            'context': {
+                'default_project_id': self.id,
+                'default_sprint_id': self.env['pr.sprint'].search([
+                    ('project_id', '=', self.id),
+                    ('status', '=', 'open')
+                ], order='create_date desc', limit=1).id or False,
+            },
             'target': 'current',
         }
 

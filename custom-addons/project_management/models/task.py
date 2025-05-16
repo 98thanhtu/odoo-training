@@ -56,12 +56,19 @@ class Task(models.Model):
         if not newest_sprint:
             raise ValidationError("No open sprint found for this project.")
 
-        # Find tasks from closed sprints with status != done
-        tasks = self.env['pr.task'].search([
-            ('project_id', '=', project_id),
-            ('sprint_id.status', '=', 'closed'),
-            ('status', '!=', 'done')
-        ])
+        active_ids = self.env.context.get('active_ids', [])
+        tasks = self.env['pr.task'].browse(active_ids).filtered(
+            lambda t: t.project_id.id == project_id and
+                      t.sprint_id.status == 'closed' and
+                      t.status != 'done'
+        )
+
+        if not tasks:
+            tasks = self.env['pr.task'].search([
+                ('project_id', '=', project_id),
+                ('sprint_id.status', '=', 'closed'),
+                ('status', '!=', 'done')
+            ])
 
         if not tasks:
             raise ValidationError("No tasks to update to the newest sprint.")

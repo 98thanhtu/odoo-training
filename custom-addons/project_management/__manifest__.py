@@ -22,7 +22,6 @@ Long description of module's purpose
 
     # always loaded
     'data': [
-        'data/pr_task_actions.xml',
         'views/pr_member_views.xml',
         'views/pr_open_request_views.xml',
         'views/pr_close_request_views.xml',
