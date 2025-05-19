@@ -63,7 +63,7 @@
           </group>
           <group>
             <field name="status" />
-            <field name="progress_status" />
+            <!-- <field name="progress_status" /> -->
           </group>
           <group>
             <field name="description" widget="text" />
@@ -83,7 +83,7 @@
         <field name="project_id" readonly="1" />
         <field name="sprint_id" />
         <field name="status" />
-        <field name="progress_status" />
+        <!-- <field name="progress_status" /> -->
         <field name="task_type_id" />
         <field name="dev_id" domain="[('role', '=', 'dev')]" />
         <field name="qc_id" domain="[('role', '=', 'qc')]" />
